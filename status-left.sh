@@ -1,15 +1,16 @@
 #!/bin/bash
 
-# Check if chunkc exists
-if ! [ -x "$(command -v chunkc)" ]; then
-  echo "{\"error\":\"chunkc binary not found\"}"
+PATH="/usr/local/bin:$PATH"
+# Check if yabai exists
+if ! [[ -x "$(command -v yabai)" ]]; then
+  echo "{\"error\":\"yabai binary : $(test -x /usr/local/bin/yabai && echo 'hello' || echo 'test')\"}"
   exit 1
 fi
 
-CURRENT_DESKTOP=$(chunkc tiling:query -m id)
-DESKTOP_ACTIVE=$(chunkc tiling::query -d id)
-DESKTOP_START=$(chunkc tiling::query -D $CURRENT_DESKTOP | head -c 1)
-DESKTOP_END=$(chunkc tiling::query -D $CURRENT_DESKTOP | tail -c 1)
+CURRENT_DESKTOP=$(yabai -m query --displays --display last)
+DESKTOP_ACTIVE=$(yabai -m query --spaces --space recent | jq .id -r)
+DESKTOP_START=$(yabai -m query --spaces --display last | jq 'map(.index)[]' | head -n 1)
+DESKTOP_END=$(yabai -m query --spaces --display last | jq 'map(.index)[]' | tail -n 1)
 
 echo $(cat <<-EOF
 {

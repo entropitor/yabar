@@ -1,37 +1,72 @@
-import DateTime from './lib/DateTime/index.jsx';
-import Battery from './lib/Battery/index.jsx';
-import Cpu from './lib/Cpu/index.jsx';
-import Memory from './lib/Memory/index.jsx';
-import Hdd from './lib/Hdd/index.jsx';
-import Wifi from './lib/Wifi/index.jsx';
-import Error from './lib/Error/index.jsx';
-import { rightSide } from './lib/style.jsx';
-import parse from './lib/parse.jsx';
+import DateTime from "./lib/DateTime.jsx";
+import Battery from "./lib/Battery.jsx";
+import Cpu from "./lib/Cpu.jsx";
+import Memory from "./lib/Memory.jsx";
+import Hdd from "./lib/Hdd.jsx";
+import Wifi from "./lib/Wifi.jsx";
+import Error from "./lib/Error/index.jsx";
+import { rightSide } from "./lib/style.jsx";
+import parse from "./lib/parse.jsx";
 
-export const refreshFrequency = 15000
+export const refreshFrequency = 15000;
 
-export const command = './powerbar/status-right.sh'
+export const command = "./powerbar/status-right.sh";
 
-export const render = ({output}) => {
+const renderWidget = ({ type, data }) => {
+  switch (type) {
+    case "wifi": {
+      return [Wifi, data.wifi];
+    }
+    case "memory": {
+      return [Memory, data.memory];
+    }
+    case "cpu": {
+      return [Cpu, data.cpu];
+    }
+    case "battery": {
+      return [Battery, data.battery];
+    }
+    case "datetime": {
+      return [DateTime, data.datetime];
+    }
+    case "hdd": {
+      return [Hdd, data.hdd];
+    }
+    default: {
+      throw new Error("Not implemented");
+    }
+  }
+};
+const accumulateWidgets = data => (acc, type) => {
+  const [Widget, output] = renderWidget({ type, data });
+
+  acc.widgets.push(<Widget output={output} offset={acc.offset} />);
+  acc.offset += Widget.WIDTH;
+
+  return acc;
+};
+
+export const render = ({ output }) => {
   console.log(`Right bar output: ${output}`);
   const data = parse(output);
-  if (typeof data === 'undefined') {
+  if (typeof data === "undefined") {
     return (
       <div style={rightSide}>
-        <Error msg="Error: unknown script output" side="right"/>
+        <Error msg="Error: unknown script output" side="right" />
       </div>
-    )
+    );
   }
+
+  const widgets = ["wifi", "memory", "cpu", "battery", "datetime"];
+
   return (
     <div style={rightSide}>
-			<Wifi output={data.wifi}/>
-			<Hdd output={data.hdd}/>
-			<Memory output={data.memory}/>
-			<Cpu output={data.cpu}/>
-      <Battery output={data.battery}/>
-      <DateTime output={data.datetime}/>
+      {widgets
+        .reverse()
+        .reduce(accumulateWidgets(data), { offset: 0, widgets: [] })
+        .widgets.reverse()}
     </div>
-  )
-}
+  );
+};
 
-export default null
+export default null;
