@@ -1,34 +1,33 @@
-import Desktop from './lib/Desktop/index.jsx';
-import Error from './lib/Error/index.jsx';
-import { leftSide } from './lib/style.jsx';
-import parse from './lib/parse.jsx';
+import Display from "./lib/Display.jsx";
+import Error from "./lib/Error.jsx";
+import { leftSide } from "./lib/style.jsx";
+import parse from "./lib/parse.jsx";
 
-export const refreshFrequency = 500
+export const refreshFrequency = 500;
 
-export const command = './powerbar/status-left.sh'
+export const command = "./powerbar/status-left.sh 1";
 
-export const render = ({output}) => {
-  console.log(`Left bar output: ${output}`);
+export const render = ({ output }) => {
   const data = parse(output);
-  if (typeof data === 'undefined') {
+  if (data == null) {
     return (
       <div style={leftSide}>
-        <Error msg="Error: unknown script output" side="left"/>
+        <Error msg="Error: unknown script output" side="left" />
       </div>
-    )
+    );
   }
-  if (typeof data.error !== 'undefined') {
+  if (data.error != null) {
     return (
       <div style={leftSide}>
-        <Error msg={`Error: ${data.error}`} side="left"/>
+        <Error msg={`Error: ${data.error}`} side="left" />
       </div>
-    )
+    );
   }
   return (
     <div style={leftSide}>
-			<Desktop output={data.desktop}/>
+      <Display spaces={data.spaces} windows={data.windows} />
     </div>
-  )
-}
+  );
+};
 
-export default null
+export default null;

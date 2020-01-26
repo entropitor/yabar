@@ -24,12 +24,12 @@ const getColorForBattery = (batteryPercentage, isCharging) => {
       return "default";
     }
   } else {
-    if (batteryPercentage < 60) {
-      return "yellow";
+    if (batteryPercentage < 20) {
+      return "red";
     } else if (batteryPercentage < 40) {
       return "orange";
-    } else if (batteryPercentage < 20) {
-      return "red";
+    } else if (batteryPercentage < 60) {
+      return "yellow";
     }
   }
 };

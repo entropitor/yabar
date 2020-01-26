@@ -14,7 +14,7 @@ export const bar = {
 
 export const leftSide = {
   height: "20px",
-  width: "40%",
+  width: "50%",
   position: "fixed",
   display: "flex",
   overflow: "hidden",

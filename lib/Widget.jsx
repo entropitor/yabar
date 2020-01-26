@@ -1,61 +1,72 @@
+const colors = {
+  black: "#2d2d2d",
+  red: "#f2777a",
+  green: "#99cc99",
+  yellow: "#ffcc66",
+  blue: "#6699cc",
+  magenta: "#cc99cc",
+  cyan: "#66cccc",
+  white: "#d3d0c8",
+  gray: "#4c566a",
+  whiteGray: "#ebeff3",
+  orange: "#f99157",
+  brightBlack: "#747369"
+};
 const getColorDetails = color => {
-  const black = "#4c566a";
-  const white = "#ebeff3";
-  const arrowLight = white;
+  const {
+    gray: textDark,
+    whiteGray,
+    green,
+    yellow,
+    orange,
+    red,
+    gray
+  } = colors;
+  const arrow = whiteGray;
 
   switch (color) {
+    case "cyan":
+    case "green":
+    case "orange":
+    case "red":
+    case "whiteGray":
+    case "yellow": {
+      const background = colors[color];
+      return {
+        arrow,
+        background,
+        text: textDark
+      };
+    }
     case "white": {
       return {
-        arrowLight,
-        background: white,
-        text: black
-      };
-    }
-    case "green": {
-      return {
-        arrowLight,
-        background: "#99cc99",
-        text: black
-      };
-    }
-    case "yellow": {
-      return {
-        arrowLight,
-        background: "#ffcc66",
-        text: black
-      };
-    }
-    case "orange": {
-      return {
-        arrowLight,
-        background: "#f99157",
-        text: black
-      };
-    }
-    case "red": {
-      return {
-        arrowLight,
-        background: "#f2777a",
-        text: black
+        arrow,
+        background: whiteGray,
+        text: textDark
       };
     }
     default: {
+      const background = colors[color] || gray;
       return {
-        arrowLight,
-        background: "#4c566a",
-        text: white
+        arrow,
+        background,
+        text: whiteGray
       };
     }
   }
 };
-const render = ({ children, width, offset, color }) => {
+const render = ({ children, width, offset, color, side = "right" }) => {
   const colorDetails = getColorDetails(color);
+  const isLeftWidget = side === "left";
+
+  const leftOrRight = isLeftWidget ? "left" : "right";
+  const borderLeftOrRight = isLeftWidget ? "borderLeft" : "borderRight";
 
   const containerStyle = {
     height: "100%",
     width: `${width}px`,
     position: "absolute",
-    right: `${offset}px`,
+    [leftOrRight]: `${offset}px`,
     top: "0px"
   };
 
@@ -64,14 +75,14 @@ const render = ({ children, width, offset, color }) => {
     width: "0",
     borderTop: "10px solid transparent",
     borderBottom: "10px solid transparent",
-    borderRight: `10px solid ${colorDetails.background}`,
+    [borderLeftOrRight]: `10px solid ${colorDetails.background}`,
     position: "absolute",
-    right: `${width}px`
+    [leftOrRight]: `${width}px`
   };
   const arrowLightStyle = {
     ...arrowStyle,
-    borderRight: `10px solid ${colorDetails.arrowLight}`,
-    right: `${width + 1}px`
+    [borderLeftOrRight]: `10px solid ${colorDetails.arrow}`,
+    [leftOrRight]: `${width + 1}px`
   };
   const contentStyle = {
     height: "100%",

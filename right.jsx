@@ -4,7 +4,7 @@ import Cpu from "./lib/Cpu.jsx";
 import Memory from "./lib/Memory.jsx";
 import Hdd from "./lib/Hdd.jsx";
 import Wifi from "./lib/Wifi.jsx";
-import Error from "./lib/Error/index.jsx";
+import Error from "./lib/Error.jsx";
 import { rightSide } from "./lib/style.jsx";
 import parse from "./lib/parse.jsx";
 
@@ -49,10 +49,20 @@ const accumulateWidgets = data => (acc, type) => {
 export const render = ({ output }) => {
   console.log(`Right bar output: ${output}`);
   const data = parse(output);
-  if (typeof data === "undefined") {
+  console.log(data);
+
+  if (data == null) {
     return (
       <div style={rightSide}>
         <Error msg="Error: unknown script output" side="right" />
+      </div>
+    );
+  }
+
+  if (data.error != null) {
+    return (
+      <div style={rightSide}>
+        <Error msg={data.error} side="right" />
       </div>
     );
   }
