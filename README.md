@@ -2,6 +2,8 @@
 
 [Übersicht](https://github.com/felixhageloh/uebersicht) widget status bar for yabai in Powerline style.
 
+This is forked from [powerbar](https://github.com/ajdnik/powerbar). Thanks for the initial work.
+
 ## Installation
 
 1. Clone this repo to your Übersicht widgets directory.
