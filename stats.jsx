@@ -10,7 +10,7 @@ import parse from "./lib/parse.jsx";
 
 export const refreshFrequency = 15000;
 
-export const command = "./powerbar/status-right.sh";
+export const command = "./powerbar/scripts/right.sh";
 
 const renderWidget = ({ type, data }) => {
   switch (type) {

@@ -1,13 +1,9 @@
-import Display from "./lib/Display.jsx";
-import Error from "./lib/Error.jsx";
-import { leftSide } from "./lib/style.jsx";
-import parse from "./lib/parse.jsx";
+import Display from "./Display.jsx";
+import Error from "./Error.jsx";
+import { leftSide } from "./style.jsx";
+import parse from "./parse.jsx";
 
-export const refreshFrequency = 500;
-
-export const command = "./powerbar/status-left.sh 1";
-
-export const render = ({ output }) => {
+const render = ({ output }) => {
   const data = parse(output);
   if (data == null) {
     return (
@@ -30,4 +26,4 @@ export const render = ({ output }) => {
   );
 };
 
-export default null;
+export default render;
