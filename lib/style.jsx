@@ -20,7 +20,7 @@ export const leftSide = {
   overflow: "hidden",
   left: "0px",
   top: "0px",
-  fontFamily: "Roboto Mono For Powerline",
+  fontFamily: "Jetbrains Mono",
   fontSize: "8pt",
   lineHeight: "20px",
   color: "rgba(216, 222, 232, 1)"
@@ -34,7 +34,7 @@ export const rightSide = {
   overflow: "hidden",
   right: "0px",
   top: "0px",
-  fontFamily: "Roboto Mono For Powerline",
+  fontFamily: "Jetbrains Mono",
   fontSize: "8pt",
   lineHeight: "20px",
   color: "rgba(216, 222, 232, 1)"

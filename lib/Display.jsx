@@ -12,7 +12,7 @@ const LABEL_REGEX = /@:(\d)+/;
 const getLabelIndexForSpace = space => {
   const groups = space.label.match(LABEL_REGEX);
   if (!groups) {
-    return "-";
+    return "";
   }
   return groups[1];
 };
@@ -61,12 +61,12 @@ const getIconBasedOnWindows = ({ space, windows }) => {
     );
 };
 const getIconForSpace = ({ space, windows }) => {
+  if (space.windows.length === 0) {
+    return "";
+  }
+
   const labelIndex = getLabelIndexForSpace(space);
-  return (
-    icons[labelIndex] ||
-    getIconBasedOnWindows({ space, windows }) ||
-    "fas fa-question-circle"
-  );
+  return icons[labelIndex] || getIconBasedOnWindows({ space, windows }) || "";
 };
 
 const getRenderDetailsForSpace = ({ index, space, windows }) => {
