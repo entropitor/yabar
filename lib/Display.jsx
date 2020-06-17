@@ -52,6 +52,8 @@ const getIconBasedOnWindows = ({ space, windows }) => {
             return "fas fa-video";
           case "Google Chrome":
             return "fab fa-chrome";
+          case "WorkFlowy":
+            return "fas fa-list";
           default:
             return false;
         }
