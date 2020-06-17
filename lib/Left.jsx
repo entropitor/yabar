@@ -19,9 +19,12 @@ const render = ({ output }) => {
       </div>
     );
   }
+
+  const nonMinimizedWindows = data.windows.filter(w => w.minimized === 0)
+
   return (
     <div style={leftSide}>
-      <Display spaces={data.spaces} windows={data.windows} />
+      <Display spaces={data.spaces} windows={nonMinimizedWindows} />
     </div>
   );
 };

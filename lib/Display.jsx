@@ -17,14 +17,15 @@ const getLabelIndexForSpace = space => {
   return groups[1];
 };
 
-const getColorForSpace = space => {
+const getColorForSpace = (space, windows) => {
   if (space.focused === 1) {
     return "blue";
   } else if (space.visible === 1) {
     return "white";
-  } else if (space.windows.length === 0) {
+  } else if (!windows.some(w => space.windows.includes(w.id))) {
     return "black";
   }
+
   return null;
 };
 const firstNonNull = fn => (acc, next) => {
@@ -63,7 +64,7 @@ const getIconBasedOnWindows = ({ space, windows }) => {
     );
 };
 const getIconForSpace = ({ space, windows }) => {
-  if (space.windows.length === 0) {
+  if (!windows.some(w => space.windows.includes(w.id))) {
     return "";
   }
 
@@ -75,7 +76,7 @@ const getRenderDetailsForSpace = ({ index, space, windows }) => {
   const width = 60;
   const offset = index * width;
 
-  const color = getColorForSpace(space);
+  const color = getColorForSpace(space, windows);
   const labelIndex = getLabelIndexForSpace(space);
   const icon = getIconForSpace({ space, windows });
 
