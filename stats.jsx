@@ -67,7 +67,13 @@ export const render = ({ output }) => {
     );
   }
 
-  const widgets = ["wifi", "memory", "cpu", "battery", "datetime"];
+  const widgets = [
+    "wifi",
+    // "memory",
+    // "cpu",
+    "battery",
+    "datetime"
+  ];
 
   return (
     <div style={rightSide}>
