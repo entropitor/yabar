@@ -12,6 +12,48 @@ export const refreshFrequency = 15000;
 
 export const command = "./yabar/scripts/right.sh";
 
+export const updateState = (event, state) => {
+  switch (event.type) {
+    case "UB/COMMAND_RAN": {
+      return {
+        ...state,
+        output: {
+          time: state.output.time,
+          ...parse(event.output)
+        },
+        error: event.error
+      };
+    }
+    case "TICK": {
+      return {
+        ...state,
+        output: {
+          ...state.output,
+          time: event.time
+        }
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export const init = dispatch => {
+  setInterval(() => {
+    dispatch({
+      type: "TICK",
+      time: new Date()
+    });
+  }, 1000);
+};
+
+export const initialState = {
+  error: "Not initialized yet",
+  output: {
+    time: new Date()
+  }
+};
+
 const renderWidget = ({ type, data }) => {
   switch (type) {
     case "wifi": {
@@ -27,7 +69,7 @@ const renderWidget = ({ type, data }) => {
       return [Battery, data.battery];
     }
     case "datetime": {
-      return [DateTime, data.datetime];
+      return [DateTime, data.time];
     }
     case "hdd": {
       return [Hdd, data.hdd];
@@ -46,12 +88,10 @@ const accumulateWidgets = data => (acc, type) => {
   return acc;
 };
 
-export const render = ({ output }) => {
-  console.log(`Right bar output: ${output}`);
-  const data = parse(output);
-  console.log(data);
+export const render = ({ output, error }, dispatch) => {
+  console.log(`Right bar output: ${JSON.stringify(output, null, 2)}`);
 
-  if (data == null) {
+  if (output == null) {
     return (
       <div style={rightSide}>
         <Error msg="Error: unknown script output" side="right" />
@@ -59,10 +99,10 @@ export const render = ({ output }) => {
     );
   }
 
-  if (data.error != null) {
+  if (error != null) {
     return (
       <div style={rightSide}>
-        <Error msg={data.error} side="right" />
+        <Error msg={error} side="right" />
       </div>
     );
   }
@@ -79,7 +119,7 @@ export const render = ({ output }) => {
     <div style={rightSide}>
       {widgets
         .reverse()
-        .reduce(accumulateWidgets(data), { offset: 0, widgets: [] })
+        .reduce(accumulateWidgets(output), { offset: 0, widgets: [] })
         .widgets.reverse()}
     </div>
   );
