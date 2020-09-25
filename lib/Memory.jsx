@@ -14,6 +14,6 @@ const render = ({ output, offset }) => {
     </Widget>
   );
 };
-render.WIDTH = 85;
+render.WIDTH = 95;
 
 export default render;

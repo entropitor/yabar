@@ -1,5 +1,7 @@
 import Widget from "./Widget.jsx";
 
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 const render = ({ output, offset }) => {
   if (typeof output === "undefined") {
     return null;
@@ -14,6 +16,6 @@ const render = ({ output, offset }) => {
     </Widget>
   );
 };
-render.WIDTH = 195;
+render.WIDTH = 205;
 
 export default render;

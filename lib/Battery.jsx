@@ -49,6 +49,6 @@ const render = ({ output, offset }) => {
   );
 };
 
-render.WIDTH = 75;
+render.WIDTH = 85;
 
 export default render;
