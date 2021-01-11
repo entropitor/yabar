@@ -8,7 +8,7 @@ const icons = {
   8: "fas fa-envelope",
   9: "fab fa-slack"
 };
-const LABEL_REGEX = /@:(\d)+/;
+const LABEL_REGEX = /@[^:]*:(\d)+/;
 const getLabelIndexForSpace = space => {
   const groups = space.label.match(LABEL_REGEX);
   if (!groups) {
@@ -72,9 +72,10 @@ const getIconForSpace = ({ space, windows }) => {
   return icons[labelIndex] || getIconBasedOnWindows({ space, windows }) || "";
 };
 
+const WIDTH_MODE = 100;
 const getRenderDetailsForSpace = ({ index, space, windows }) => {
   const width = 60;
-  const offset = index * width;
+  const offset = index * width + WIDTH_MODE;
 
   const color = getColorForSpace(space, windows);
   const labelIndex = getLabelIndexForSpace(space);
@@ -92,7 +93,7 @@ const renderSpace = ({ color, labelIndex, icon, width, offset }) => {
   );
 };
 
-const render = ({ spaces, windows }) => {
+const render = ({ spaces, windows, mode }) => {
   if (spaces == null) {
     return null;
   }
@@ -104,7 +105,19 @@ const render = ({ spaces, windows }) => {
     })
     .reverse();
 
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+      <Widget
+        offset={0 * spaces.length}
+        width={WIDTH_MODE}
+        color="magenta"
+        side="left"
+      >
+        {mode}
+      </Widget>
+    </div>
+  );
 };
 
 export default render;

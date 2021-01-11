@@ -20,11 +20,24 @@ const render = ({ output }) => {
     );
   }
 
-  const nonMinimizedWindows = data.windows.filter(w => w.minimized === 0)
+  const nonMinimizedWindows = data.windows.filter(w => w.minimized === 0);
+  const relevantSpaces = data.spaces.filter(space => {
+    if (!space.label.startsWith("@")) {
+      return true;
+    }
+    if (space.label.startsWith(`@${data.mode}:`)) {
+      return true;
+    }
+    return false;
+  });
 
   return (
     <div style={leftSide}>
-      <Display spaces={data.spaces} windows={nonMinimizedWindows} />
+      <Display
+        spaces={relevantSpaces}
+        windows={nonMinimizedWindows}
+        mode={data.mode}
+      />
     </div>
   );
 };
