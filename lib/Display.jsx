@@ -43,6 +43,7 @@ const getIconBasedOnWindows = ({ space, windows }) => {
           case "Firefox":
             return "fab fa-firefox";
           case "Alacritty":
+          case "kitty":
             return "fas fa-terminal";
           case "Lens":
           case "kubenav":
@@ -55,6 +56,8 @@ const getIconBasedOnWindows = ({ space, windows }) => {
             return "fab fa-chrome";
           case "WorkFlowy":
             return "fas fa-list";
+          case "Abstract":
+            return "fas fa-palette";
           default:
             return false;
         }
