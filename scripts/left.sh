@@ -19,6 +19,7 @@ cat <<EOF
 {
   "spaces": $(yabai -m query --spaces --display $1),
   "windows": $(yabai -m query --windows --display $1),
+  "focus": "$($HOME/.bin/zabai focus)",
   "mode": "$($HOME/.bin/zabai mode)"
 }
 EOF

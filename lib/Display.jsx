@@ -96,7 +96,7 @@ const renderSpace = ({ color, labelIndex, icon, width, offset }) => {
   );
 };
 
-const render = ({ spaces, windows, mode }) => {
+const render = ({ spaces, windows, mode, focussed }) => {
   if (spaces == null) {
     return null;
   }
@@ -114,7 +114,7 @@ const render = ({ spaces, windows, mode }) => {
       <Widget
         offset={0 * spaces.length}
         width={WIDTH_MODE}
-        color="magenta"
+        color={focussed ? "green" : mode === "work" ? "red" : "magenta"}
         side="left"
       >
         {mode}

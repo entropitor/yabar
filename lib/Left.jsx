@@ -20,10 +20,20 @@ const render = ({ output }) => {
     );
   }
 
+  const focussed = data.focus === "focus";
+
   const nonMinimizedWindows = data.windows.filter(w => w.minimized === 0);
   const relevantSpaces = data.spaces.filter(space => {
     if (!space.label.startsWith("@")) {
       return true;
+    }
+    if (focussed) {
+      if (space.label.startsWith(`@${data.mode}:8`)) {
+        return false;
+      }
+      if (space.label.startsWith(`@${data.mode}:9`)) {
+        return false;
+      }
     }
     if (space.label.startsWith(`@${data.mode}:`)) {
       return true;
@@ -37,6 +47,7 @@ const render = ({ output }) => {
         spaces={relevantSpaces}
         windows={nonMinimizedWindows}
         mode={data.mode}
+        focussed={focussed}
       />
     </div>
   );
