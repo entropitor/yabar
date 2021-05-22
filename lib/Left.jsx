@@ -22,7 +22,9 @@ const render = ({ output }) => {
 
   const focussed = data.focus === "focus";
 
-  const nonMinimizedWindows = data.windows.filter(w => w.minimized === 0);
+  const relevantWindows = data.windows
+    .filter(w => w.minimized === 0)
+    .filter(w => w.sticky === 0);
   const relevantSpaces = data.spaces.filter(space => {
     if (!space.label.startsWith("@")) {
       return true;
@@ -45,7 +47,7 @@ const render = ({ output }) => {
     <div style={leftSide}>
       <Display
         spaces={relevantSpaces}
-        windows={nonMinimizedWindows}
+        windows={relevantWindows}
         mode={data.mode}
         focussed={focussed}
       />
