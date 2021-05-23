@@ -1,94 +1,95 @@
+import { React } from "uebersicht";
+
 import Widget from "./Widget.jsx";
 
-const icons = {
-  1: "fab fa-firefox",
-  2: "fas fa-pencil-alt",
-  3: "fas fa-terminal",
-  7: "fab fa-facebook-messenger",
-  8: "fas fa-envelope",
-  9: "fab fa-slack"
-};
 const LABEL_REGEX = /@[^:]*:(\d)+/;
 const getLabelIndexForSpace = space => {
   const groups = space.label.match(LABEL_REGEX);
   if (!groups) {
     return "";
   }
-  return groups[1];
+  return parseInt(groups[1], 10);
 };
 
-const getColorForSpace = (space, windows) => {
+const getColorForSpace = ({ space, spaceWindows }) => {
   if (space.focused === 1) {
     return "blue";
   } else if (space.visible === 1) {
     return "white";
-  } else if (!windows.some(w => space.windows.includes(w.id))) {
+  } else if (spaceWindows.length === 0) {
     return "black";
   }
 
   return null;
 };
-const firstNonNull = fn => (acc, next) => {
-  if (acc != null) {
-    return acc;
-  }
-  return fn(next);
-};
-const getIconBasedOnWindows = ({ space, windows }) => {
-  return windows
-    .filter(window => space.windows.includes(window.id))
-    .reduce(
-      firstNonNull(window => {
-        switch (window.app) {
-          case "Firefox":
-            return "fab fa-firefox";
-          case "Alacritty":
-          case "kitty":
-            return "fas fa-terminal";
-          case "Lens":
-          case "kubenav":
-            return "fas fa-search";
-          case "Valentina Studio":
-            return "fas fa-database";
-          case "zoom.us":
-            return "fas fa-video";
-          case "Google Chrome":
-            return "fab fa-chrome";
-          case "WorkFlowy":
-            return "fas fa-list";
-          case "Abstract":
-            return "fas fa-palette";
-          default:
-            return false;
-        }
-      }),
-      null
-    );
-};
-const getIconForSpace = ({ space, windows }) => {
-  if (!windows.some(w => space.windows.includes(w.id))) {
-    return "";
-  }
 
+const getIconForWindow = space => window => {
   const labelIndex = getLabelIndexForSpace(space);
-  return icons[labelIndex] || getIconBasedOnWindows({ space, windows }) || "";
+  switch (window.app) {
+    case "Firefox": {
+      return (
+        {
+          7: "fab fa-facebook-messenger",
+          8: "fas fa-envelope"
+        }[labelIndex] ?? "fab fa-firefox"
+      );
+    }
+    case "Google Chrome":
+      return "fab fa-chrome";
+    case "Alacritty":
+    case "kitty": {
+      return (
+        {
+          2: "fas fa-pencil-alt"
+        }[labelIndex] ?? "fas fa-terminal"
+      );
+    }
+    case "Lens":
+    case "kubenav":
+      return "fas fa-search";
+    case "Valentina Studio":
+      return "fas fa-database";
+    case "zoom.us":
+      return "fas fa-video";
+    case "WorkFlowy":
+      return "fas fa-list";
+    case "Abstract":
+      return "fas fa-palette";
+    default:
+      return null;
+  }
+};
+const getIconsForSpace = ({ space, spaceWindows }) => {
+  const icons = spaceWindows.map(getIconForWindow(space));
+  return icons.filter(x => x).reverse();
 };
 
 const WIDTH_MODE = 100;
-const getRenderDetailsForSpace = ({ space, windows }) => {
-  const width = 60;
+const getRenderDetailsForSpace = windows => space => {
+  const spaceWindows = windows.filter(w => space.windows.includes(w.id));
 
-  const color = getColorForSpace(space, windows);
+  const color = getColorForSpace({ space, spaceWindows });
   const labelIndex = getLabelIndexForSpace(space);
-  const icon = getIconForSpace({ space, windows });
+  const icons = getIconsForSpace({ space, spaceWindows });
 
-  return { color, labelIndex, icon, width };
+  return {
+    color,
+    labelIndex,
+    icons,
+    width: 60 + Math.max(0, icons.length - 1) * 20
+  };
 };
 
-const renderSpace = ({ color, labelIndex, icon, width, offset }) => {
+const renderSpace = ({ color, labelIndex, icons, width, offset }) => {
   return (
     <Widget offset={offset} width={width} side="left" color={color}>
-      &nbsp; <i class={`${icon}`} />
+      &nbsp;{" "}
+      {icons.map(icon => (
+        <>
+          {" "}
+          <i class={`${icon}`} />
+        </>
+      ))}
       &nbsp;{labelIndex}
     </Widget>
   );
@@ -115,7 +116,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
   }
 
   const children = spaces
-    .map(space => getRenderDetailsForSpace({ space, windows }))
+    .map(getRenderDetailsForSpace(windows))
     .reduce(accumulateOffsetFromWidth, initialAccumulateOffset)
     .acc.map(renderSpace)
     .reverse();
@@ -124,7 +125,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     <div>
       {children}
       <Widget
-        offset={0 * spaces.length}
+        offset={0}
         width={WIDTH_MODE}
         color={focussed ? "green" : mode === "work" ? "red" : "magenta"}
         side="left"
