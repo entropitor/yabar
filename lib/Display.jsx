@@ -61,7 +61,6 @@ const getIconBasedOnWindows = ({ space, windows }) => {
           default:
             return false;
         }
-        return false;
       }),
       null
     );
@@ -76,15 +75,14 @@ const getIconForSpace = ({ space, windows }) => {
 };
 
 const WIDTH_MODE = 100;
-const getRenderDetailsForSpace = ({ index, space, windows }) => {
+const getRenderDetailsForSpace = ({ space, windows }) => {
   const width = 60;
-  const offset = index * width + WIDTH_MODE;
 
   const color = getColorForSpace(space, windows);
   const labelIndex = getLabelIndexForSpace(space);
   const icon = getIconForSpace({ space, windows });
 
-  return { color, labelIndex, icon, offset, width };
+  return { color, labelIndex, icon, width };
 };
 
 const renderSpace = ({ color, labelIndex, icon, width, offset }) => {
@@ -96,16 +94,30 @@ const renderSpace = ({ color, labelIndex, icon, width, offset }) => {
   );
 };
 
+const initialAccumulateOffset = { acc: [], offset: WIDTH_MODE };
+const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
+  const newOffset = offset + details.width;
+  return {
+    acc: [
+      ...acc,
+      {
+        ...details,
+        offset
+      }
+    ],
+    offset: newOffset
+  };
+};
+
 const render = ({ spaces, windows, mode, focussed }) => {
   if (spaces == null) {
     return null;
   }
 
   const children = spaces
-    .map((space, index) => getRenderDetailsForSpace({ index, space, windows }))
-    .map(details => {
-      return renderSpace(details);
-    })
+    .map(space => getRenderDetailsForSpace({ space, windows }))
+    .reduce(accumulateOffsetFromWidth, initialAccumulateOffset)
+    .acc.map(renderSpace)
     .reverse();
 
   return (
