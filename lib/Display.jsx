@@ -38,11 +38,16 @@ const getIconForWindow = space => window => {
       return "fab fa-chrome";
     case "Alacritty":
     case "kitty": {
-      return (
-        {
-          2: "fas fa-pencil-alt"
-        }[labelIndex] ?? "fas fa-terminal"
-      );
+      if (window.title === "editor") {
+        return "fas fa-pencil-alt";
+      }
+      if (window.title === "cli") {
+        return "fas fa-terminal";
+      }
+      if (labelIndex === 2) {
+        return "fas fa-pencil-alt";
+      }
+      return "fas fa-cat";
     }
     case "Lens":
     case "kubenav":
@@ -55,8 +60,12 @@ const getIconForWindow = space => window => {
       return "fas fa-list";
     case "Abstract":
       return "fas fa-palette";
+    case "System Preferences":
+      return "fas fa-cogs";
+    case "Slack":
+      return "fab fa-slack";
     default:
-      return null;
+      return "fas fa-question";
   }
 };
 const getIconsForSpace = ({ space, spaceWindows }) => {
