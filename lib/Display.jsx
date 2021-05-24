@@ -73,7 +73,6 @@ const getIconsForSpace = ({ space, spaceWindows }) => {
   return icons.filter(x => x).reverse();
 };
 
-const WIDTH_MODE = 100;
 const getRenderDetailsForSpace = windows => space => {
   const spaceWindows = windows.filter(w => space.windows.includes(w.id));
 
@@ -104,7 +103,10 @@ const renderSpace = ({ color, labelIndex, icons, width, offset }) => {
   );
 };
 
-const initialAccumulateOffset = { acc: [], offset: WIDTH_MODE };
+const initialAccumulateOffset = initialOffset => ({
+  acc: [],
+  offset: initialOffset
+});
 const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
   const newOffset = offset + details.width;
   return {
@@ -119,20 +121,40 @@ const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
   };
 };
 
+const WIDTH_MODE = 100;
+const WIDTH_LAYOUT = 70;
 const render = ({ spaces, windows, mode, focussed }) => {
   if (spaces == null) {
     return null;
   }
 
+  const space = spaces.find(space => space.focused === 1);
+  const showLayout = space != null;
+
+  let initialOffset = WIDTH_MODE;
+  if (showLayout) {
+    initialOffset += WIDTH_LAYOUT;
+  }
+
   const children = spaces
     .map(getRenderDetailsForSpace(windows))
-    .reduce(accumulateOffsetFromWidth, initialAccumulateOffset)
+    .reduce(accumulateOffsetFromWidth, initialAccumulateOffset(initialOffset))
     .acc.map(renderSpace)
     .reverse();
 
   return (
     <div>
       {children}
+      {showLayout && (
+        <Widget
+          offset={WIDTH_MODE}
+          side="left"
+          color={"cyan"}
+          width={WIDTH_LAYOUT}
+        >
+          &nbsp; {space?.type}
+        </Widget>
+      )}
       <Widget
         offset={0}
         width={WIDTH_MODE}
