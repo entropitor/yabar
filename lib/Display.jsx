@@ -128,7 +128,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     return null;
   }
 
-  const space = spaces.find(space => space.focused === 1);
+  const space = spaces.find(space => space.visible === 1);
   const showLayout = space != null;
 
   let initialOffset = WIDTH_MODE;
