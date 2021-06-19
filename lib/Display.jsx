@@ -64,6 +64,12 @@ const getIconForWindow = space => window => {
       return "fas fa-cogs";
     case "Slack":
       return "fab fa-slack";
+    case "Finder":
+      return "fas fa-folder-open";
+    case "Miro":
+      return "fas fa-chalkboard";
+    case "Keybase":
+      return "fab fa-keybase";
     default:
       return "fas fa-question";
   }
