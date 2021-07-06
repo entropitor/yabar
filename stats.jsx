@@ -89,7 +89,7 @@ const accumulateWidgets = data => (acc, type) => {
 };
 
 export const render = ({ output, error }, dispatch) => {
-  console.log(`Right bar output: ${JSON.stringify(output, null, 2)}`);
+  // console.log(`Right bar output: ${JSON.stringify(output, null, 2)}`);
 
   if (output == null) {
     return (
