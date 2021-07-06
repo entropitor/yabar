@@ -70,6 +70,8 @@ const getIconForWindow = space => window => {
       return "fas fa-chalkboard";
     case "Keybase":
       return "fab fa-keybase";
+    case "GraphQL Playground":
+      return "far fa-paper-plane";
     default:
       return "fas fa-question";
   }
