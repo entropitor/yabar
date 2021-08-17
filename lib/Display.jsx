@@ -59,6 +59,7 @@ const getIconForWindow = space => window => {
     case "WorkFlowy":
       return "fas fa-list";
     case "Abstract":
+    case "Figma":
       return "fas fa-palette";
     case "System Preferences":
       return "fas fa-cogs";
