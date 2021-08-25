@@ -93,6 +93,8 @@ const getRenderDetailsForSpace = windows => space => {
   const icons = getIconsForSpace({ space, spaceWindows });
 
   return {
+    nbWindows: spaceWindows.length,
+    focused: space.focused,
     color,
     labelIndex,
     icons,
@@ -150,6 +152,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
 
   const children = spaces
     .map(getRenderDetailsForSpace(windows))
+    .filter(({ nbWindows, focused }) => nbWindows > 0 || focused)
     .reduce(accumulateOffsetFromWidth, initialAccumulateOffset(initialOffset))
     .acc.map(renderSpace)
     .reverse();
