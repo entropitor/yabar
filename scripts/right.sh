@@ -71,18 +71,35 @@ elif [ "$BATTERY_STATUS" == "AC" ]; then
   BATTERY_CHARGING="true"
 fi
 
-LOAD_AVERAGE=$(sysctl -n vm.loadavg | awk '{print $2}')
+# LOAD_AVERAGE=$(sysctl -n vm.loadavg | awk '{print $2}')
 
-VOLUME=$(osascript -e 'output volume of (get volume settings)')
-IS_MUTED=$(osascript -e 'output muted of (get volume settings)')
+# VOLUME=$(osascript -e 'output volume of (get volume settings)')
+# IS_MUTED=$(osascript -e 'output muted of (get volume settings)')
 
-HDD_TOTAL_BYTES=$(df | grep -m 1 /disk1 | awk -F" " '{print $2}')
-HDD_FREE_BYTES=$(df | grep -m 1 /disk1 | awk -F" " '{print $4}')
+# HDD_TOTAL_BYTES=$(df | grep -m 1 /disk1 | awk -F" " '{print $2}')
+# HDD_FREE_BYTES=$(df | grep -m 1 /disk1 | awk -F" " '{print $4}')
 
-MEMORY_FREE=$(memory_pressure | grep "Pages free" | grep -o -E '[0-9]+')
-MEMORY_TOTAL=$(memory_pressure | grep system | awk -F" " '{print $5}' | grep -o -E '[0-9]+')
+# MEMORY_FREE=$(memory_pressure | grep "Pages free" | grep -o -E '[0-9]+')
+# MEMORY_TOTAL=$(memory_pressure | grep system | awk -F" " '{print $5}' | grep -o -E '[0-9]+')
 
 WIFI_SSID=$(networksetup -getairportnetwork en0 | cut -c 24-)
+
+
+  # "cpu": {
+  #   "loadAverage": $LOAD_AVERAGE
+  # },
+	# "hdd": {
+	#   "freeBytes": $HDD_FREE_BYTES,
+	#   "totalBytes": $HDD_TOTAL_BYTES
+	# },
+	# "memory": {
+	#   "total": $MEMORY_TOTAL,
+	#   "free": $MEMORY_FREE
+	# },
+	# "volume": {
+	#   "volume": $VOLUME,
+	#   "muted": $IS_MUTED
+	# },
 
 echo $(cat <<-EOF
 {
@@ -90,21 +107,6 @@ echo $(cat <<-EOF
     "percentage": $BATTERY_PERCENTAGE,
     "charging": $BATTERY_CHARGING
   },
-  "cpu": {
-    "loadAverage": $LOAD_AVERAGE
-  },
-	"volume": {
-		"volume": $VOLUME,
-		"muted": $IS_MUTED
-	},
-	"hdd": {
-		"freeBytes": $HDD_FREE_BYTES,
-		"totalBytes": $HDD_TOTAL_BYTES
-	},
-	"memory": {
-		"total": $MEMORY_TOTAL,
-		"free": $MEMORY_FREE
-	},
 	"wifi": {
 		"ssid": "$WIFI_SSID"
 	}

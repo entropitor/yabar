@@ -8,7 +8,7 @@ import Error from "./lib/Error.jsx";
 import { rightSide } from "./lib/style.jsx";
 import parse from "./lib/parse.jsx";
 
-export const refreshFrequency = 15000;
+export const refreshFrequency = 60000;
 
 export const command = "./yabar/scripts/right.sh";
 
