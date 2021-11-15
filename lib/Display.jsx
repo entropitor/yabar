@@ -86,7 +86,7 @@ const getIconsForSpace = ({ space, spaceWindows }) => {
 };
 
 const getRenderDetailsForSpace = windows => space => {
-  const spaceWindows = windows.filter(w => space.windows.includes(w.id));
+  const spaceWindows = space.windows.map(windowId => windows.find(w => w.id === windowId)).filter(x => x);
 
   const color = getColorForSpace({ space, spaceWindows });
   const labelIndex = getLabelIndexForSpace(space);

@@ -24,7 +24,8 @@ const render = ({ output }) => {
 
   const relevantWindows = data.windows
     .filter(w => w.minimized === 0)
-    .filter(w => w.sticky === 0);
+    .filter(w => w.sticky === 0)
+    .filter(w => !(w.subrole === 'AXSystemDialog' && ['Remotion','zoom.us'].includes(w.app)));
   const relevantSpaces = data.spaces.filter(space => {
     if (!space.label.startsWith("@")) {
       return true;
