@@ -29,11 +29,13 @@ const getIconForWindow = space => window => {
     case "Firefox": {
       return (
         {
-          7: "fab fa-facebook-messenger",
+          7: "fas fa-comment-dots",
           8: "fas fa-envelope"
         }[labelIndex] ?? "fab fa-firefox"
       );
     }
+    case 'Signal':
+      return  "fas fa-comment-dots";
     case "Google Chrome":
       return "fab fa-chrome";
     case "Alacritty":
