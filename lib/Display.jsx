@@ -31,11 +31,12 @@ const getIconForWindow = space => window => {
         {
           7: "fas fa-comment-dots",
           8: "fas fa-envelope"
-        }[labelIndex] ?? "fab fa-firefox"
+        }[labelIndex] ??
+        "fab fa-firefox"
       );
     }
-    case 'Signal':
-      return  "fas fa-comment-dots";
+    case "Signal":
+      return "fas fa-comment-dots";
     case "Google Chrome":
       return "fab fa-chrome";
     case "Alacritty":
@@ -88,7 +89,9 @@ const getIconsForSpace = ({ space, spaceWindows }) => {
 };
 
 const getRenderDetailsForSpace = windows => space => {
-  const spaceWindows = space.windows.map(windowId => windows.find(w => w.id === windowId)).filter(x => x);
+  const spaceWindows = space.windows
+    .map(windowId => windows.find(w => w.id === windowId))
+    .filter(x => x);
 
   const color = getColorForSpace({ space, spaceWindows });
   const labelIndex = getLabelIndexForSpace(space);
