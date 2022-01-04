@@ -29,6 +29,9 @@ const getIconForWindow = space => window => {
     case "Firefox": {
       return (
         {
+          "Brain.fm": "fas fa-volume-up"
+        }[window.title] ??
+        {
           7: "fas fa-comment-dots",
           8: "fas fa-envelope"
         }[labelIndex] ??
