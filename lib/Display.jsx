@@ -165,6 +165,19 @@ const render = ({ spaces, windows, mode, focussed }) => {
     .acc.map(renderSpace)
     .reverse();
 
+  const getColorForMode = () => {
+    if (focussed) {
+      return green;
+    }
+
+    return (
+      {
+        work: "red",
+        personal: "magenta"
+      }[mode] ?? "blue"
+    );
+  };
+
   return (
     <div>
       {children}
@@ -181,7 +194,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
       <Widget
         offset={0}
         width={WIDTH_MODE}
-        color={focussed ? "green" : mode === "work" ? "red" : "magenta"}
+        color={getColorForMode()}
         side="left"
       >
         {mode}
