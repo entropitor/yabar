@@ -44,10 +44,10 @@ const getIconForWindow = space => window => {
       return "fab fa-chrome";
     case "Alacritty":
     case "kitty": {
-      if (window.title === "editor") {
+      if (window.title.endsWith("editor")) {
         return "fas fa-pencil-alt";
       }
-      if (window.title === "cli") {
+      if (window.title.endsWith("cli")) {
         return "fas fa-terminal";
       }
       if (labelIndex === 2) {
