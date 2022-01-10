@@ -167,7 +167,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
 
   const getColorForMode = () => {
     if (focussed) {
-      return green;
+      return "green";
     }
 
     return (
