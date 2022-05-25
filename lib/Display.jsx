@@ -12,9 +12,9 @@ const getLabelIndexForSpace = space => {
 };
 
 const getColorForSpace = ({ space, spaceWindows }) => {
-  if (space.focused === 1) {
+  if (space["has-focus"]) {
     return "blue";
-  } else if (space.visible === 1) {
+  } else if (space["is-visible"]) {
     return "white";
   } else if (spaceWindows.length === 0) {
     return "black";
@@ -102,7 +102,7 @@ const getRenderDetailsForSpace = windows => space => {
 
   return {
     nbWindows: spaceWindows.length,
-    focused: space.focused,
+    focused: space["has-focus"],
     color,
     labelIndex,
     icons,
@@ -150,7 +150,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     return null;
   }
 
-  const space = spaces.find(space => space.visible === 1);
+  const space = spaces.find(space => space["is-visible"]);
   const showLayout = space != null;
 
   let initialOffset = WIDTH_MODE;

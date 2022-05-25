@@ -23,8 +23,8 @@ const render = ({ output }) => {
   const focussed = data.focus === "focus";
 
   const relevantWindows = data.windows
-    .filter(w => w.minimized === 0)
-    .filter(w => w.sticky === 0)
+    .filter(w => !w["is-minimized"])
+    .filter(w => !w["is-sticky"])
     .filter(
       w =>
         !(
