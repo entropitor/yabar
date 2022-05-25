@@ -1,4 +1,5 @@
 import { React } from "uebersicht";
+import { run } from "uebersicht";
 
 import Widget from "./Widget.jsx";
 
@@ -104,15 +105,29 @@ const getRenderDetailsForSpace = windows => space => {
     nbWindows: spaceWindows.length,
     focused: space["has-focus"],
     color,
+    spaceIndex: space.index,
     labelIndex,
     icons,
     width: 60 + Math.max(0, icons.length - 1) * 20
   };
 };
 
-const renderSpace = ({ color, labelIndex, icons, width, offset }) => {
+const renderSpace = ({
+  color,
+  spaceIndex,
+  labelIndex,
+  icons,
+  width,
+  offset
+}) => {
   return (
-    <Widget offset={offset} width={width} side="left" color={color}>
+    <Widget
+      offset={offset}
+      width={width}
+      side="left"
+      color={color}
+      onClick={() => run(`yabai -m space --focus ${spaceIndex}`)}
+    >
       &nbsp;{" "}
       {icons.map(icon => (
         <>

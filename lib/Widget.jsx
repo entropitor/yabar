@@ -55,7 +55,7 @@ const getColorDetails = color => {
     }
   }
 };
-const render = ({ children, width, offset, color, side = "right" }) => {
+const render = ({ children, onClick, width, offset, color, side = "right" }) => {
   const colorDetails = getColorDetails(color);
   const isLeftWidget = side === "left";
 
@@ -96,7 +96,7 @@ const render = ({ children, width, offset, color, side = "right" }) => {
     <div style={containerStyle}>
       <div style={arrowLightStyle} />
       <div style={arrowStyle} />
-      <div style={contentStyle}>{children}</div>
+      <div style={contentStyle} onClick={onClick}>{children}</div>
     </div>
   );
 };
