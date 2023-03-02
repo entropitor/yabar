@@ -4,7 +4,7 @@ import { run } from "uebersicht";
 import Widget from "./Widget.jsx";
 
 const LABEL_REGEX = /@[^:]*:(\d)+/;
-const getLabelIndexForSpace = space => {
+const getLabelIndexForSpace = (space) => {
   const groups = space.label.match(LABEL_REGEX);
   if (!groups) {
     return "";
@@ -24,17 +24,17 @@ const getColorForSpace = ({ space, spaceWindows }) => {
   return null;
 };
 
-const getIconForWindow = space => window => {
+const getIconForWindow = (space) => (window) => {
   const labelIndex = getLabelIndexForSpace(space);
   switch (window.app) {
     case "Firefox": {
       return (
         {
-          "Brain.fm": "fas fa-volume-up"
+          "Brain.fm": "fas fa-volume-up",
         }[window.title] ??
         {
           7: "fas fa-comment-dots",
-          8: "fas fa-envelope"
+          8: "fas fa-envelope",
         }[labelIndex] ??
         "fab fa-firefox"
       );
@@ -89,13 +89,13 @@ const getIconForWindow = space => window => {
 };
 const getIconsForSpace = ({ space, spaceWindows }) => {
   const icons = spaceWindows.map(getIconForWindow(space));
-  return icons.filter(x => x).reverse();
+  return icons.filter((x) => x).reverse();
 };
 
-const getRenderDetailsForSpace = windows => space => {
+const getRenderDetailsForSpace = (windows) => (space) => {
   const spaceWindows = space.windows
-    .map(windowId => windows.find(w => w.id === windowId))
-    .filter(x => x);
+    .map((windowId) => windows.find((w) => w.id === windowId))
+    .filter((x) => x);
 
   const color = getColorForSpace({ space, spaceWindows });
   const labelIndex = getLabelIndexForSpace(space);
@@ -108,7 +108,7 @@ const getRenderDetailsForSpace = windows => space => {
     spaceIndex: space.index,
     labelIndex,
     icons,
-    width: 60 + Math.max(0, icons.length - 1) * 20
+    width: 60 + Math.max(0, icons.length - 1) * 20,
   };
 };
 
@@ -118,7 +118,7 @@ const renderSpace = ({
   labelIndex,
   icons,
   width,
-  offset
+  offset,
 }) => {
   return (
     <Widget
@@ -129,7 +129,7 @@ const renderSpace = ({
       onClick={() => run(`yabai -m space --focus ${spaceIndex}`)}
     >
       &nbsp;{" "}
-      {icons.map(icon => (
+      {icons.map((icon) => (
         <>
           {" "}
           <i class={`${icon}`} />
@@ -140,9 +140,9 @@ const renderSpace = ({
   );
 };
 
-const initialAccumulateOffset = initialOffset => ({
+const initialAccumulateOffset = (initialOffset) => ({
   acc: [],
-  offset: initialOffset
+  offset: initialOffset,
 });
 const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
   const newOffset = offset + details.width;
@@ -151,10 +151,10 @@ const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
       ...acc,
       {
         ...details,
-        offset
-      }
+        offset,
+      },
     ],
-    offset: newOffset
+    offset: newOffset,
   };
 };
 
@@ -165,7 +165,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     return null;
   }
 
-  const space = spaces.find(space => space["is-visible"]);
+  const space = spaces.find((space) => space["is-visible"]);
   const showLayout = space != null;
 
   let initialOffset = WIDTH_MODE;
@@ -188,7 +188,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     return (
       {
         work: "red",
-        personal: "magenta"
+        personal: "magenta",
       }[mode] ?? "blue"
     );
   };

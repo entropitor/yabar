@@ -19,9 +19,9 @@ export const updateState = (event, state) => {
         ...state,
         output: {
           time: state.output.time,
-          ...parse(event.output)
+          ...parse(event.output),
         },
-        error: event.error
+        error: event.error,
       };
     }
     case "TICK": {
@@ -29,8 +29,8 @@ export const updateState = (event, state) => {
         ...state,
         output: {
           ...state.output,
-          time: event.time
-        }
+          time: event.time,
+        },
       };
     }
     default:
@@ -38,11 +38,11 @@ export const updateState = (event, state) => {
   }
 };
 
-export const init = dispatch => {
+export const init = (dispatch) => {
   setInterval(() => {
     dispatch({
       type: "TICK",
-      time: new Date()
+      time: new Date(),
     });
   }, 1000);
 };
@@ -50,8 +50,8 @@ export const init = dispatch => {
 export const initialState = {
   error: "Not initialized yet",
   output: {
-    time: new Date()
-  }
+    time: new Date(),
+  },
 };
 
 const renderWidget = ({ type, data }) => {
@@ -79,7 +79,7 @@ const renderWidget = ({ type, data }) => {
     }
   }
 };
-const accumulateWidgets = data => (acc, type) => {
+const accumulateWidgets = (data) => (acc, type) => {
   const [Widget, output] = renderWidget({ type, data });
 
   acc.widgets.push(<Widget output={output} offset={acc.offset} />);
@@ -112,7 +112,7 @@ export const render = ({ output, error }, dispatch) => {
     // "memory",
     // "cpu",
     "battery",
-    "datetime"
+    "datetime",
   ];
 
   return (

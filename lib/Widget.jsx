@@ -10,9 +10,9 @@ const colors = {
   gray: "#4c566a",
   whiteGray: "#ebeff3",
   orange: "#f99157",
-  brightBlack: "#747369"
+  brightBlack: "#747369",
 };
-const getColorDetails = color => {
+const getColorDetails = (color) => {
   const {
     gray: textDark,
     whiteGray,
@@ -20,7 +20,7 @@ const getColorDetails = color => {
     yellow,
     orange,
     red,
-    gray
+    gray,
   } = colors;
   const arrow = whiteGray;
 
@@ -35,14 +35,14 @@ const getColorDetails = color => {
       return {
         arrow,
         background,
-        text: textDark
+        text: textDark,
       };
     }
     case "white": {
       return {
         arrow,
         background: whiteGray,
-        text: textDark
+        text: textDark,
       };
     }
     default: {
@@ -50,12 +50,19 @@ const getColorDetails = color => {
       return {
         arrow,
         background,
-        text: whiteGray
+        text: whiteGray,
       };
     }
   }
 };
-const render = ({ children, onClick, width, offset, color, side = "right" }) => {
+const render = ({
+  children,
+  onClick,
+  width,
+  offset,
+  color,
+  side = "right",
+}) => {
   const colorDetails = getColorDetails(color);
   const isLeftWidget = side === "left";
 
@@ -67,7 +74,7 @@ const render = ({ children, onClick, width, offset, color, side = "right" }) => 
     width: `${width}px`,
     position: "absolute",
     [leftOrRight]: `${offset}px`,
-    top: "0px"
+    top: "0px",
   };
 
   const arrowStyle = {
@@ -77,26 +84,28 @@ const render = ({ children, onClick, width, offset, color, side = "right" }) => 
     borderBottom: "10px solid transparent",
     [borderLeftOrRight]: `10px solid ${colorDetails.background}`,
     position: "absolute",
-    [leftOrRight]: `${width}px`
+    [leftOrRight]: `${width}px`,
   };
   const arrowLightStyle = {
     ...arrowStyle,
     [borderLeftOrRight]: `10px solid ${colorDetails.arrow}`,
-    [leftOrRight]: `${width + 1}px`
+    [leftOrRight]: `${width + 1}px`,
   };
   const contentStyle = {
     height: "100%",
     width: `${width}px`,
     background: `${colorDetails.background}`,
     textAlign: "center",
-    color: `${colorDetails.text}`
+    color: `${colorDetails.text}`,
   };
 
   return (
     <div style={containerStyle}>
       <div style={arrowLightStyle} />
       <div style={arrowStyle} />
-      <div style={contentStyle} onClick={onClick}>{children}</div>
+      <div style={contentStyle} onClick={onClick}>
+        {children}
+      </div>
     </div>
   );
 };

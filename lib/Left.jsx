@@ -23,16 +23,16 @@ const render = ({ output }) => {
   const focussed = data.focus === "focus";
 
   const relevantWindows = data.windows
-    .filter(w => !w["is-minimized"])
-    .filter(w => !w["is-sticky"])
+    .filter((w) => !w["is-minimized"])
+    .filter((w) => !w["is-sticky"])
     .filter(
-      w =>
+      (w) =>
         !(
           w.subrole === "AXSystemDialog" &&
           ["Remotion", "zoom.us"].includes(w.app)
         )
     );
-  const relevantSpaces = data.spaces.filter(space => {
+  const relevantSpaces = data.spaces.filter((space) => {
     if (!space.label.startsWith("@")) {
       return true;
     }

@@ -4,7 +4,7 @@ import {
   arrowLeft,
   arrowRight,
   contentLeft,
-  contentRight
+  contentRight,
 } from "./style.jsx";
 import Widget from "./Widget.jsx";
 

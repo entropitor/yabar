@@ -9,7 +9,7 @@ export const bar = {
   top: "0px",
   right: "0px",
   left: "0px",
-  WebkitBackdropFilter: "blur(15px)"
+  WebkitBackdropFilter: "blur(15px)",
 };
 
 export const leftSide = {
@@ -23,7 +23,7 @@ export const leftSide = {
   fontFamily: "Jetbrains Mono",
   fontSize: "8pt",
   lineHeight: "20px",
-  color: "rgba(216, 222, 232, 1)"
+  color: "rgba(216, 222, 232, 1)",
 };
 
 export const rightSide = {
@@ -37,5 +37,5 @@ export const rightSide = {
   fontFamily: "Jetbrains Mono",
   fontSize: "8pt",
   lineHeight: "20px",
-  color: "rgba(216, 222, 232, 1)"
+  color: "rgba(216, 222, 232, 1)",
 };

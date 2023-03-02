@@ -1,4 +1,4 @@
-const parse = data => {
+const parse = (data) => {
   try {
     return JSON.parse(data);
   } catch (e) {
