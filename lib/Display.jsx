@@ -30,7 +30,7 @@ const getIconForWindow = (space) => (window) => {
     case "Firefox": {
       return (
         {
-          "Brain.fm": "fas fa-volume-up",
+          "Brain.fm": "fas fa-music",
         }[window.title] ??
         {
           7: "fas fa-comment-dots",
@@ -62,7 +62,11 @@ const getIconForWindow = (space) => (window) => {
     case "Valentina Studio":
       return "fas fa-database";
     case "zoom.us":
+    case "Google Meet":
       return "fas fa-video";
+    case "Brain.fm App":
+    case "Spotify":
+      return "fas fa-music";
     case "WorkFlowy":
       return "fas fa-list";
     case "Abstract":
