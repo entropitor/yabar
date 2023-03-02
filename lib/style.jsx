@@ -1,8 +1,9 @@
+const height = 20;
 export const bar = {
   background: "rgba(46, 51, 64, 0.5)",
   zIndex: "-1",
   width: "100%",
-  height: "20px",
+  height: height + 12,
   position: "fixed",
   display: "flex",
   overflow: "hidden",
@@ -13,7 +14,7 @@ export const bar = {
 };
 
 export const leftSide = {
-  height: "20px",
+  height,
   width: "50%",
   position: "fixed",
   display: "flex",
@@ -24,11 +25,11 @@ export const leftSide = {
   fontSize: "8pt",
   lineHeight: "20px",
   color: "rgba(216, 222, 232, 1)",
+  marginTop: 5,
 };
 
 export const rightSide = {
-  height: "20px",
-  width: "60%",
+  height,
   position: "fixed",
   display: "flex",
   overflow: "hidden",
@@ -37,5 +38,6 @@ export const rightSide = {
   fontFamily: "Jetbrains Mono",
   fontSize: "8pt",
   lineHeight: "20px",
+  marginTop: 5,
   color: "rgba(216, 222, 232, 1)",
 };

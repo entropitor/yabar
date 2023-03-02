@@ -68,41 +68,28 @@ const render = ({
 
   const leftOrRight = isLeftWidget ? "left" : "right";
   const borderLeftOrRight = isLeftWidget ? "borderLeft" : "borderRight";
+  const borderLeftOrRightReverse = isLeftWidget ? "borderRight" : "borderLeft";
 
   const containerStyle = {
     height: "100%",
-    width: `${width}px`,
-    position: "absolute",
-    [leftOrRight]: `${offset}px`,
-    top: "0px",
+    width: width,
   };
 
-  const arrowStyle = {
-    height: "0",
-    width: "0",
-    borderTop: "10px solid transparent",
-    borderBottom: "10px solid transparent",
-    [borderLeftOrRight]: `10px solid ${colorDetails.background}`,
-    position: "absolute",
-    [leftOrRight]: `${width}px`,
-  };
-  const arrowLightStyle = {
-    ...arrowStyle,
-    [borderLeftOrRight]: `10px solid ${colorDetails.arrow}`,
-    [leftOrRight]: `${width + 1}px`,
-  };
   const contentStyle = {
     height: "100%",
-    width: `${width}px`,
-    background: `${colorDetails.background}`,
+    display: "flex",
+    width: width - 10,
+    background: colorDetails.background,
     textAlign: "center",
-    color: `${colorDetails.text}`,
+    justifyContent: "center",
+    alignItems: "center",
+    color: colorDetails.text,
+    margin: 0,
+    borderRadius: 100,
   };
 
   return (
     <div style={containerStyle}>
-      <div style={arrowLightStyle} />
-      <div style={arrowStyle} />
       <div style={contentStyle} onClick={onClick}>
         {children}
       </div>

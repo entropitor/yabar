@@ -128,14 +128,13 @@ const renderSpace = ({
       color={color}
       onClick={() => run(`yabai -m space --focus ${spaceIndex}`)}
     >
-      &nbsp;{" "}
       {icons.map((icon) => (
         <>
-          {" "}
           <i class={`${icon}`} />
+          &nbsp;
         </>
       ))}
-      &nbsp;{labelIndex}
+      {labelIndex}
     </Widget>
   );
 };
@@ -177,8 +176,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
     .map(getRenderDetailsForSpace(windows))
     .filter(({ nbWindows, focused }) => nbWindows > 0 || focused)
     .reduce(accumulateOffsetFromWidth, initialAccumulateOffset(initialOffset))
-    .acc.map(renderSpace)
-    .reverse();
+    .acc.map(renderSpace);
 
   const getColorForMode = () => {
     if (focussed) {
@@ -194,18 +192,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
   };
 
   return (
-    <div>
-      {children}
-      {showLayout && (
-        <Widget
-          offset={WIDTH_MODE}
-          side="left"
-          color={"cyan"}
-          width={WIDTH_LAYOUT}
-        >
-          &nbsp; {space?.type}
-        </Widget>
-      )}
+    <div style={{ display: "flex" }}>
       <Widget
         offset={0}
         width={WIDTH_MODE}
@@ -214,6 +201,17 @@ const render = ({ spaces, windows, mode, focussed }) => {
       >
         {mode}
       </Widget>
+      {showLayout && (
+        <Widget
+          offset={WIDTH_MODE}
+          side="left"
+          color={"cyan"}
+          width={WIDTH_LAYOUT}
+        >
+          {space?.type}
+        </Widget>
+      )}
+      {children}
     </div>
   );
 };

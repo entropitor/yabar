@@ -31,7 +31,8 @@ const render = ({ output }) => {
           w.subrole === "AXSystemDialog" &&
           ["Remotion", "zoom.us"].includes(w.app)
         )
-    );
+    )
+    .filter((w) => w.subrole !== "AXUnknown.Hammerspoon");
   const relevantSpaces = data.spaces.filter((space) => {
     if (!space.label.startsWith("@")) {
       return true;

@@ -117,10 +117,11 @@ export const render = ({ output, error }, dispatch) => {
 
   return (
     <div style={rightSide}>
-      {widgets
-        .reverse()
-        .reduce(accumulateWidgets(output), { offset: 0, widgets: [] })
-        .widgets.reverse()}
+      <div style={{display: 'flex'}}>
+        {widgets
+          .reduce(accumulateWidgets(output), { offset: 0, widgets: [] })
+          .widgets}
+      </div>
     </div>
   );
 };
