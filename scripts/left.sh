@@ -15,10 +15,12 @@ if ! [[ -x "$(command -v jq)" ]]; then
   exit 1
 fi
 
+display_index=$(yabai -m query --displays | jq -r "sort_by(.id) | .[$1].index")
+
 cat <<EOF
 {
-  "spaces": $(yabai -m query --spaces --display $1),
-  "windows": $(yabai -m query --windows --display $1),
+  "spaces": $(yabai -m query --spaces --display $display_index),
+  "windows": $(yabai -m query --windows --display $display_index),
   "focus": "$($HOME/.bin/zabai focus)",
   "mode": "$($HOME/.bin/zabai mode)"
 }
