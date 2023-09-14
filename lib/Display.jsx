@@ -27,6 +27,8 @@ const getColorForSpace = ({ space, spaceWindows }) => {
 const getIconForWindow = (space) => (window) => {
   const labelIndex = getLabelIndexForSpace(space);
   switch (window.app) {
+    case "Todoist":
+      return "fas fa-check";
     case "Firefox": {
       return (
         {
