@@ -46,6 +46,7 @@ const getIconForWindow = (space) => (window) => {
     case "Google Chrome":
       return "fab fa-chrome";
     case "Alacritty":
+    case ".kitty-wrapped":
     case "kitty": {
       if (window.title.endsWith("editor")) {
         return "fas fa-pencil-alt";
