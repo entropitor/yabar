@@ -102,7 +102,8 @@ const getIconsForSpace = ({ space, spaceWindows }) => {
 const getRenderDetailsForSpace = (windows) => (space) => {
   const spaceWindows = space.windows
     .map((windowId) => windows.find((w) => w.id === windowId))
-    .filter((x) => x);
+    .filter((x) => x)
+    .filter((w) => w["has-ax-reference"]);
 
   const color = getColorForSpace({ space, spaceWindows });
   const labelIndex = getLabelIndexForSpace(space);
