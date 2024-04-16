@@ -164,6 +164,15 @@ const accumulateOffsetFromWidth = ({ acc, offset }, details) => {
   };
 };
 
+const getColorForLayout = (layout) => {
+  return (
+    {
+      bsp: "green",
+      stack: "orange",
+    }[layout] ?? "cyan"
+  );
+};
+
 const WIDTH_MODE = 100;
 const WIDTH_LAYOUT = 70;
 const render = ({ spaces, windows, mode, focussed }) => {
@@ -172,7 +181,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
   }
 
   const space = spaces.find((space) => space["is-visible"]);
-  const showLayout = space != null;
+  const showLayout = space != null && space?.type !== "bsp";
 
   let initialOffset = WIDTH_MODE;
   if (showLayout) {
@@ -212,7 +221,7 @@ const render = ({ spaces, windows, mode, focussed }) => {
         <Widget
           offset={WIDTH_MODE}
           side="left"
-          color={"cyan"}
+          color={getColorForLayout(space?.type)}
           width={WIDTH_LAYOUT}
         >
           {space?.type}
