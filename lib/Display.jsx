@@ -63,6 +63,7 @@ const getIconForWindow = (space) => (window) => {
     case "kubenav":
       return "fas fa-search";
     case "Valentina Studio":
+    case "MongoDB Compass":
       return "fas fa-database";
     case "zoom.us":
     case "Google Meet":
