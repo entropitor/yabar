@@ -12,6 +12,9 @@ const render = ({ output }) => {
       </div>
     );
   }
+  if (!data?.active) {
+    return null;
+  }
   if (data.error != null) {
     return (
       <div style={leftSide}>
@@ -30,7 +33,7 @@ const render = ({ output }) => {
         !(
           w.subrole === "AXSystemDialog" &&
           ["Remotion", "zoom.us"].includes(w.app)
-        )
+        ),
     )
     .filter((w) => w.subrole !== "AXUnknown.Hammerspoon");
   const relevantSpaces = data.spaces.filter((space) => {

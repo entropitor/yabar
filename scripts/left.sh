@@ -17,11 +17,22 @@ fi
 
 display_index=$(yabai -m query --displays | jq -r "sort_by(.id) | .[$1].index")
 
+if [[ ${display_index} == "null" ]]; then
+
+cat <<EOF
+{ "active": false }
+EOF
+
+else
+
 cat <<EOF
 {
+  "active": true,
   "spaces": $(yabai -m query --spaces --display $display_index),
   "windows": $(yabai -m query --windows --display $display_index),
   "focus": "$($HOME/.bin/zabai focus)",
   "mode": "$($HOME/.bin/zabai mode)"
 }
 EOF
+
+fi
