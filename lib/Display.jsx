@@ -26,6 +26,11 @@ const getColorForSpace = ({ space, spaceWindows }) => {
 
 const getIconForWindow = (space) => (window) => {
   const labelIndex = getLabelIndexForSpace(space);
+
+  if (window.app.startsWith("MongoDB Compass")) {
+    return "fas fa-database";
+  }
+
   switch (window.app) {
     case "Todoist":
       return "fas fa-check";
