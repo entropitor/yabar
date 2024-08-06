@@ -32,7 +32,7 @@ const render = ({ output }) => {
       (w) =>
         !(
           w.subrole === "AXSystemDialog" &&
-          ["Remotion", "zoom.us"].includes(w.app)
+          ["Remotion", "zoom.us", "ClickShare App"].includes(w.app)
         ),
     )
     .filter((w) => w.subrole !== "AXUnknown.Hammerspoon");
