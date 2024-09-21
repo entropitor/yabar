@@ -15,24 +15,14 @@ if ! [[ -x "$(command -v jq)" ]]; then
   exit 1
 fi
 
-display_index=$(yabai -m query --displays | jq -r "sort_by(.id) | .[$1].index")
-
-if [[ ${display_index} == "null" ]]; then
-
-cat <<EOF
-{ "active": false }
-EOF
-
-else
+display_label=$1
 
 cat <<EOF
 {
   "active": true,
-  "spaces": $(yabai -m query --spaces --display $display_index),
-  "windows": $(yabai -m query --windows --display $display_index),
+  "spaces": $(yabai -m query --spaces --display $display_label),
+  "windows": $(yabai -m query --windows --display $display_label),
   "focus": "$($HOME/.bin/zabai focus)",
   "mode": "$($HOME/.bin/zabai mode)"
 }
 EOF
-
-fi
